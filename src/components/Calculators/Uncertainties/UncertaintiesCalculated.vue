@@ -20,6 +20,18 @@
             <div class="text-subtitle2">{{ calculatedData.uncertaintyA }}</div>
           </q-card-section>
         </q-card>
+        <q-card class="col-12 col-sm-4 col-md-3" @click="copy(`${calculatedData.uncertaintyB}`)">
+          <q-card-section>
+            <div class="text-h6">Incerteza B</div>
+            <div class="text-subtitle2">{{ calculatedData.uncertaintyB }}</div>
+          </q-card-section>
+        </q-card>
+        <q-card class="col-12 col-sm-4 col-md-3" @click="copy(`${calculatedData.uncertaintyC}`)">
+          <q-card-section>
+            <div class="text-h6">Incerteza C</div>
+            <div class="text-subtitle2">{{ calculatedData.uncertaintyC }}</div>
+          </q-card-section>
+        </q-card>
       </div>  
     </div>
 </template>

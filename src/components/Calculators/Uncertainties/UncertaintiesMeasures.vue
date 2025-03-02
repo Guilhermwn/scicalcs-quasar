@@ -27,17 +27,23 @@
 
 <script setup>
 import { ref } from "vue";
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
 
 const measures = ref("");
 const uncertaintiesB = ref("");
 
 const emit = defineEmits(['setCalculatedData']);
 
-// const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const apiBaseUrl = process.env.API_BACKEND_URL;
+const apiBaseUrl = import.meta.env.VITE_API_BACKEND_URL;
+// const apiBaseUrl = "http://192.168.1.4:8000";
+// const apiBaseUrl = process.env.API_BACKEND_URL;
+
 
 const fetchData = async () => {
   try {
+    $q.notify('Calculando...')
     const response = await fetch(`${apiBaseUrl}/uncertainties`, {
       method: 'POST',
       headers: {
@@ -45,10 +51,12 @@ const fetchData = async () => {
       },
       body: JSON.stringify({
         measures: measures.value,
+        uncertaintiesB: uncertaintiesB.value
       }),
     });
 
     if (!response.ok) {
+      $q.notify('Erro ao fazer a requisição')
       throw new Error('Erro ao fazer a requisição');
     }
 
@@ -58,6 +66,7 @@ const fetchData = async () => {
     // Emitir os dados para o componente pai
     emit('setCalculatedData', data);
   } catch (error) {
+    $q.notify(`Erro ao realizar a requisição: ${error}`)
     console.error('Erro ao realizar a requisição:', error);
   }
 };
